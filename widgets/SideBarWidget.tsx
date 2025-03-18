@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Sidebar,
   SidebarContent,
@@ -6,14 +5,17 @@ import {
   SidebarGroup,
   SidebarHeader,
 } from '@/components/ui/sidebar';
+import { GenresWidjet } from './GenresWidget';
 
 export function SideBarWidget() {
   return (
     <Sidebar>
-      <SidebarHeader />
+      <SidebarHeader>
+        <h2 className="font-bold">Choose your favorite genres</h2>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <Button size="sm">Film genres</Button>
+          <GenresWidjet />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
