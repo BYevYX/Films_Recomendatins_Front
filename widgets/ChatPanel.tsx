@@ -6,6 +6,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
 import { useSpeechRecognition } from 'react-speech-recognition';
+import { DrawerWidjet } from './DrawerWidjet';
 
 // Динамический импорт с отключением SSR
 const Dictaphone = dynamic(() => import('@/widgets/Dictaphone'), {
@@ -104,6 +105,9 @@ function ChatPanel({
           listening={listening}
           browserSupportsSpeechRecognition={browserSupportsSpeechRecognition}
         />
+      </div>
+      <div className="self-center">
+        <DrawerWidjet />
       </div>
     </div>
   );

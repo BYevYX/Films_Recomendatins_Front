@@ -124,3 +124,25 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes glow {
+  from {
+    filter: brightness(1);
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+  }
+  to {
+    filter: brightness(1.1);
+    box-shadow: 0 0 25px rgba(33, 150, 243, 0.8);
+  }
+}
+
+@layer components {
+  .play-button::before {
+    @apply content-[''] absolute inset-[5%] rounded-full border-2 border-gray-200;
+  }
+
+  /* Регистрируем анимацию как кастомный класс */
+  .animate-glow {
+    animation: glow 1.5s infinite alternate;
+  }
+}
