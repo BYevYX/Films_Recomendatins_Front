@@ -36,6 +36,7 @@ const Dictaphone = ({
         <AlertTitle className="flex justify-between items-center">
           Warning!
           <Button
+            type="button"
             size="sm"
             className="w-0.5 h-5"
             onClick={() => setIsClickedWhenNotSupported(false)}
@@ -53,6 +54,7 @@ const Dictaphone = ({
   return (
     <div>
       <Button
+        type="button"
         size="icon"
         className="disabled:bg-gray-500 disabled:hover:bg-gray-600"
         onClick={handleClick}

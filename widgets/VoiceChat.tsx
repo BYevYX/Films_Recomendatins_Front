@@ -51,6 +51,12 @@ export default function VoiceChat() {
     }
   }, [finalTranscript, genres, resetTranscript]);
 
+  useEffect(() => {
+    return () => {
+      resetTranscript();
+    };
+  }, []);
+
   return (
     <div className="flex flex-1 flex-col gap-3 ml-4">
       <div className="flex flex-col">
