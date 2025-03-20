@@ -41,11 +41,16 @@ export async function fetchAiAnswer(genres: GenresType, formData: FormData) {
 export async function fetchAudio(text: string, genres: GenresType) {
   const chatResponse = await fetch(VOICE_CHAT_API_URL, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       transcription: text,
       genres: genres,
     }),
   });
+
+  if (!chatResponse.ok) throw chatResponse.status;
 
   const json: { answer: string; audio_base64: string } =
     await chatResponse.json();

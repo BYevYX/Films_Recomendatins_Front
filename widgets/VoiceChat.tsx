@@ -16,20 +16,23 @@ import {
 
 export default function VoiceChat() {
   const [response, setResponse] = useState('');
+  const [lastTranscription, setLastTranscrition] = useState('');
   const [audioUrl, setAudioUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const { genres } = useContext(GenresContext);
 
-  const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const { finalTranscript, listening, resetTranscript } =
+    useSpeechRecognition();
 
   useEffect(() => {
-    console.log('===> start ', transcript);
     const handleSendMessage = async (text: string) => {
       setIsLoading(true);
       try {
         // Шаг 1: Получаем ответ от ChatGPT
+
         const { answer, url } = await fetchAudio(text, genres);
+
         console.log('===> receive ', url, answer);
 
         setResponse(answer);
@@ -41,11 +44,12 @@ export default function VoiceChat() {
       }
     };
 
-    if (transcript) {
-      handleSendMessage(transcript);
+    if (finalTranscript) {
+      handleSendMessage(finalTranscript);
+      setLastTranscrition(finalTranscript);
       resetTranscript();
     }
-  }, [transcript, genres, resetTranscript]);
+  }, [finalTranscript, genres, resetTranscript]);
 
   return (
     <div className="flex flex-1 flex-col gap-3 ml-4">
@@ -56,20 +60,22 @@ export default function VoiceChat() {
         >
           {listening ? 'Запись...' : 'Начать запись'}
         </Button>
-        {isLoading && <div>Обработка...</div>}
-        {transcript && (
+        {lastTranscription && !listening && (
           <Popover>
             <PopoverTrigger className="cursor-pointer mt-1 hover:bg-gray-200">
               Распознанный текст
             </PopoverTrigger>
-            <PopoverContent className="break-all">{transcript}</PopoverContent>
+            <PopoverContent className="break-all">
+              {lastTranscription}
+            </PopoverContent>
           </Popover>
         )}
+        {isLoading && <div>Обработка...</div>}
       </div>
 
       <div className="flex flex-col">
-        {audioUrl && <AudioPlayer src={audioUrl} />}
-        {response && (
+        {audioUrl && !listening && <AudioPlayer src={audioUrl} />}
+        {response && !listening && (
           <Popover>
             <PopoverTrigger className="cursor-pointer mt-1 hover:bg-gray-200">
               Текстовый ответ
